@@ -44,6 +44,8 @@ public class MainActivity extends BaseActivity implements IProductsGroupView, IP
     public void initView() {
         titleBar.setTitle("DEMO");
 
+        // 开始获取所有产品分组数据
+        productsPresenter.productsGroups(this);
         // 初始化产品分组适配器
         categoryGroupAdapter = new CategoryGroupAdapter(this);
         lvCategoryGroup.setAdapter(categoryGroupAdapter);
@@ -64,13 +66,25 @@ public class MainActivity extends BaseActivity implements IProductsGroupView, IP
                 productsPresenter.productsCategorys(itemData.getId().intValue(), MainActivity.this);
             }
         });
+        // 开始获取所有产品分组数据
+        productsPresenter.productsGroups(this);
 
         // 初始化产品分类适配器
         categorysAdapter = new CategorysAdapter(this);
         gvCategorys.setAdapter(categorysAdapter);
 
-        // 开始获取所有产品分组数据
-        productsPresenter.productsGroups(this);
+        gvCategorys.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                showToast("点击了"+position);
+
+                // 改变当前item选中状态
+                ProductsCategory itemData = categorysAdapter.getItemData(position);
+
+
+
+            }
+        });
     }
 
     @Override
